@@ -1,0 +1,40 @@
+services:
+  api:
+    image: mcr.microsoft.com/dotnet/aspnet:9.0
+    container_name: myapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app  # Mapeia a pasta 'src' para '/app' dentro do container
+    working_dir: /app  # Define o diretório de trabalho dentro do container como '/app'
+    ports:
+      - "5000:5000"
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourPassword123!
+    ports:
+      - "1433:1433"
+    networks:
+      - mynetwork
+    volumes:
+      - sql_data:/var/opt/mssql
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  sql_data:
+    driver: local

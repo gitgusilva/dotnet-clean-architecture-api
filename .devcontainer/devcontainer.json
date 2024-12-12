@@ -1,0 +1,26 @@
+{
+  "name": "C# Development",
+  "dockerFile": "../Dockerfile",
+  "context": "..",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true,
+        "files.exclude": {
+          "**/bin": true,
+          "**/obj": true
+        }
+      },
+      "extensions": [
+        "ms-dotnettools.csharp"
+      ]
+    }
+  },
+  "postCreateCommand": "dotnet restore",
+  "forwardPorts": [
+    5000,
+    5012
+  ],
+  "remoteUser": "dotnetuser"
+}
