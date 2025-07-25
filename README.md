@@ -56,7 +56,7 @@ docker-compose up -d
 ```
 
 - A API estará disponível em `http://localhost:5000`
-- O MySQL estará disponível na porta `3306` (acesso interno via `db`)
+- O MySQL estará disponível na porta `3306` (acesso interno via `container`) e `3399` para acesso externo
 
 ### Rodar migrations (dentro do container da API)
 ```sh
