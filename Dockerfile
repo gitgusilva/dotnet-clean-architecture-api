@@ -29,4 +29,4 @@ RUN dotnet restore
 EXPOSE 5000
 
 # Use o comando `dotnet run` para rodar no modo desenvolvimento
-CMD ["dotnet", "watch" "run", "--urls", "http://0.0.0.0:5000"]
+CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:5000"]

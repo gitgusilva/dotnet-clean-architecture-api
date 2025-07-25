@@ -1,7 +1,7 @@
+name: dotnet-api
 services:
   api:
     image: mcr.microsoft.com/dotnet/aspnet:9.0
-    container_name: myapi
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,17 +19,16 @@ services:
       - mynetwork
 
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
+    image: mysql:8.0
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourPassword123!
+      - MYSQL_ROOT_PASSWORD=YourPassword123!
+      - MYSQL_DATABASE=MyDb
     ports:
-      - "1433:1433"
+      - "3399:3306"
     networks:
       - mynetwork
     volumes:
-      - sql_data:/var/opt/mssql
+      - mysql_data:/var/lib/mysql
 
 networks:
   mynetwork:
@@ -37,4 +36,6 @@ networks:
 
 volumes:
   sql_data:
+    driver: local
+  mysql_data:
     driver: local

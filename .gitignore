@@ -1,2 +1,48 @@
-.bin
-.src/bin
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# Dotnet tools
+/.tools/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+**/mysql_data/
+**/sql_data/
+
+# EF Core
+Migrations/
+
+# Secrets
+secrets.json
+appsettings.*.local.json
+
+# Test results
+TestResults/
+
+# Others
+*.swp
+*.bak
+*.tmp
+
+# Ignore local devcontainer
+.devcontainer/
