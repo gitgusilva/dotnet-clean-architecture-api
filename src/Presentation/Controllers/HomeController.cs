@@ -2,11 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MyApi.Presentation.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    [Route("/")]
+    public class HomeController : ControllerBase
     {
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return Ok("API está online");
         }
     }
 } 

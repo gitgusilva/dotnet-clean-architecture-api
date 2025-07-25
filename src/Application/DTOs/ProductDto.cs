@@ -13,7 +13,7 @@ namespace MyApi.Application.DTOs
         /// <summary>
         /// Nome do produto.
         /// </summary>
-        public string Name { get; set; }
+        public required string Name { get; set; }
         
         /// <summary>
         /// Preço do produto.

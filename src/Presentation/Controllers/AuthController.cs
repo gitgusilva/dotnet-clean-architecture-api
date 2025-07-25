@@ -19,7 +19,7 @@ namespace MyApi.Presentation.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly string _jwtSecret;
+        private readonly string? _jwtSecret;
         private readonly UserManager<User> _userManager;
         /// <summary>
         /// Inicializa uma nova instância de AuthController.
@@ -28,7 +28,7 @@ namespace MyApi.Presentation.Controllers
         /// <param name="userManager">Gerenciador de usuários do Identity.</param>
         public AuthController(IConfiguration config, UserManager<User> userManager)
         {
-            _jwtSecret = config["Jwt:Secret"];
+            _jwtSecret = config["Jwt:Secret"]!;
             _userManager = userManager;
         }
         /// <summary>
@@ -71,6 +71,8 @@ namespace MyApi.Presentation.Controllers
         private string GenerateJwtToken(string username)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            if (string.IsNullOrEmpty(_jwtSecret))
+                throw new InvalidOperationException("JWT secret is not configured.");
             var key = Encoding.ASCII.GetBytes(_jwtSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -89,11 +91,11 @@ namespace MyApi.Presentation.Controllers
             /// <summary>
             /// Nome de usuário.
             /// </summary>
-            public string Username { get; set; }
+            public required string Username { get; set; }
             /// <summary>
             /// Senha.
             /// </summary>
-            public string Password { get; set; }
+            public required string Password { get; set; }
         }
         /// <summary>
         /// Modelo de requisição para registro.
@@ -103,15 +105,15 @@ namespace MyApi.Presentation.Controllers
             /// <summary>
             /// Nome de usuário.
             /// </summary>
-            public string Username { get; set; }
+            public required string Username { get; set; }
             /// <summary>
             /// Email do usuário.
             /// </summary>
-            public string Email { get; set; }
+            public required string Email { get; set; }
             /// <summary>
             /// Senha.
             /// </summary>
-            public string Password { get; set; }
+            public required string Password { get; set; }
         }
     }
 } 

@@ -16,7 +16,7 @@ namespace MyApi.Presentation.Middleware
         public AuthMiddleware(RequestDelegate next, IConfiguration config)
         {
             _next = next;
-            _jwtSecret = config["Jwt:Secret"];
+            _jwtSecret = config["Jwt:Secret"]!;
         }
 
         public async Task InvokeAsync(HttpContext context)

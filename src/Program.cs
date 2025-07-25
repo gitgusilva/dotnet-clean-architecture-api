@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder.Services.AddIdentity<MyApi.Domain.Entities.User, IdentityRole>()
     .AddDefaultTokenProviders();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"];
+if (string.IsNullOrEmpty(jwtSecret))
+    throw new InvalidOperationException("JWT secret is not configured.");
 var key = Encoding.ASCII.GetBytes(jwtSecret);
 builder.Services.AddAuthentication(options =>
 {
@@ -51,10 +54,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
 
-builder.Services.AddControllers().AddFluentValidation(fv =>
-{
-    fv.RegisterValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
-});
+builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<MyApi.Application.Validators.CreateProductDtoValidator>();
 
 var app = builder.Build();
 
